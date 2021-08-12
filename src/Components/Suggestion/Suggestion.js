@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Button from '@material-ui/core/Button';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from "yup"
 import './Suggestion.css'
-
+import { UserContext } from '../ContextFolder/UserContext';
 
 function Suggestion() {
 
+    const msg = useContext(UserContext)
+
     const initialValues = {
-        name: '',
-        email: '',
-        age: '',
-        gender: '',
+        name: 'Aman',
+        email: 'aman@gmail.com',
+        age: '21',
+        gender: 'male',
         checked: [],
     }
 
@@ -23,32 +25,39 @@ function Suggestion() {
     })
 
     const [data, setData] = useState([])
-    const [name, setname] = useState('')
-    const [email, setemail] = useState('')
-    const [age, setage] = useState('')
-    const [gender, setgender] = useState('')
 
-    console.log(data)
-    
-    const list = () => {
+    const onSubmit = (values, onSubmitProps) => {
+        console.log(values)
+        onSubmitProps.resetForm()
+        // setname(values.name)
+        // setemail(values.email)
+        // setage(values.age)
+        // setgender(values.gender)
+
+        var name = values.name
+        var email = values.email
+        var age = values.age
+        var gender = values.gender
+        var hobbies = values.checked
+
         setData((oldData) => {
             return (
-                [...oldData, ({ id: Date.now(), name, email, age, gender })]
+                [...oldData, ({ id: Date.now(), name, email, age, gender, hobbies })]
             )
         })
+        console.log(data)
+        console.log(hobbies)
     }
-    const onSubmit = (values, onSubmitProps) => {
-        console.log(values.name)
-        // onSubmitProps.resetForm()
-        setname(values.name)
-        setemail(values.email)
-        setage(values.age)
-        setgender(values.gender)
-        list()
+
+    function deleteHandler(index) {
+        const tableList = [...data]
+        tableList.splice(index, 1)
+        setData(tableList)
     }
-    
+
     return (
         <div>
+            {msg}
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                 <Form>
                     <div>
@@ -97,16 +106,16 @@ function Suggestion() {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((contact) => (
+                    {data.map((contact, index) => (
                         <tr key={contact.id}>
                             <td>{contact.name}</td>
                             <td>{contact.email}</td>
                             <td>{contact.age}</td>
                             <td>{contact.gender}</td>
-                            <td>{contact.hobby}</td>
+                            <td>{contact.hobbies.join(', ')}</td>
                             <td>
-                                <button>Edit</button>
-                                <button>Delete</button>
+                                <button id='btnEdit'>Edit</button>
+                                <button id='btnDel' onClick={() => deleteHandler(index)}>Delete</button>
                             </td>
                         </tr>
                     ))}

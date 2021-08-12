@@ -62,3 +62,19 @@ input {
     display: flex;
     margin: 10px;
 }
+
+#btnEdit {
+    padding: 5px;
+    width: 50%;
+    background-color: rgb(100, 106, 197);
+    color: white;
+    font-weight: bold;
+}
+
+#btnDel {
+    padding: 5px;
+    width: 50%;
+    background-color: rgb(218, 53, 53);
+    color: white;
+    font-weight: bold;
+}

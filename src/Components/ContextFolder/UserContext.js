@@ -1,9 +1,3 @@
-const defaultState = {
-    dark: false,
-    toggleDark: () => {}
-}
-const ThemeContext = React.createContext(defaultState);
+import { createContext } from 'react'
 
-<ThemeContext.Provider value={{dark, toggleDark}}>
-{children}
-</ThemeContext.Provider>
+export const UserContext = createContext(null)
